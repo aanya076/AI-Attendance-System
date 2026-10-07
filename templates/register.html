@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register Student</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Register Student</h1>
+
+    <p>Enter student details below.</p>
+
+
+    <form method="POST">
+
+        <label>
+            Student Name
+        </label>
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter student name"
+            required
+        >
+
+
+        <label>
+            Roll Number
+        </label>
+
+        <input
+            type="text"
+            name="roll_no"
+            placeholder="Enter roll number"
+            required
+        >
+
+
+        <button type="submit">
+            Register Student
+        </button>
+
+    </form>
+
+
+    <br>
+
+    <a href="/">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>
