@@ -1,93 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Attendance Records</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
+    <div class="container">
 
-<div class="container">
+        <h1>Attendance Records</h1>
+        <p>Student attendance details</p>
 
-    <h1>Attendance Records</h1>
+        {% if records %}
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Roll Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
 
-    <table>
-
-        <tr>
-
-            <th>Name</th>
-
-            <th>Roll Number</th>
-
-            <th>Date</th>
-
-            <th>Time</th>
-
-            <th>Status</th>
-
-        </tr>
-
-
-        {% for record in records %}
-
-        <tr>
-
-            <td>
-                {{ record.name }}
-            </td>
-
-            <td>
-                {{ record.roll_no }}
-            </td>
-
-            <td>
-                {{ record.date }}
-            </td>
-
-            <td>
-                {{ record.time }}
-            </td>
-
-            <td>
-                {{ record.status }}
-            </td>
-
-        </tr>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record['name'] }}</td>
+                    <td>{{ record['roll_no'] }}</td>
+                    <td>{{ record['date'] }}</td>
+                    <td>{{ record['time'] }}</td>
+                    <td>{{ record['status'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
         {% else %}
 
-        <tr>
+        <p>No attendance records found.</p>
 
-            <td colspan="5">
-                No attendance records available.
-            </td>
+        {% endif %}
 
-        </tr>
+        <br>
 
-        {% endfor %}
+        <a href="/">Back to Dashboard</a>
 
-    </table>
-
-
-    <br>
-
-    <a href="/">
-        ← Back to Dashboard
-    </a>
-
-</div>
-
+    </div>
 </body>
-
 </html>

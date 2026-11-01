@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🌷 Attendance Records | AI Attendance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px 15px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: #684b70;
+            background: linear-gradient(
+                135deg,
+                #ffe5f1,
+                #eee5ff,
+                #fff0f7
+            );
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffc4df, #d8c5ff);
+            border: 2px solid #f5d7f0;
+            border-radius: 28px;
+            box-shadow: 0 8px 25px rgba(174, 125, 184, 0.15);
+        }
+
+        .page-header h1 {
+            margin: 0 0 12px;
+            color: #784b83;
+            font-size: 32px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #805f8b;
+            line-height: 1.7;
+        }
+
+        .decoration {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .records-card {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.94);
+            border: 2px solid #f3d9ee;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(174, 125, 184, 0.13);
+        }
+
+        .records-title {
+            text-align: center;
+            color: #b45d9c;
+            margin: 0 0 10px;
+            font-size: 25px;
+        }
+
+        .records-subtitle {
+            text-align: center;
+            color: #9a7ca2;
+            margin: 0 0 25px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #e8d8ff, #ffdcec);
+        }
+
+        th {
+            padding: 16px 13px;
+            color: #704d80;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 13px;
+            border-bottom: 1px solid #f0e1f1;
+            overflow-wrap: anywhere;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fff5fb;
+        }
+
+        tbody tr:hover {
+            background: #f5edff;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #e0f7e8;
+            color: #286b43;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .empty-state {
+            padding: 35px 15px;
+            text-align: center;
+            background: #fff5fb;
+            border: 1px dashed #e7bde0;
+            border-radius: 18px;
+            line-height: 1.8;
+        }
+
+        .empty-state .emoji {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .back-link {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 0;
+            padding: 13px 22px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ef9cc9, #b49aee);
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(190, 120, 180, 0.18);
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            text-align: center;
+            color: #a58baa;
+            font-size: 13px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .page-header {
+                padding: 25px 15px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .records-card {
+                padding: 16px 12px;
+            }
+
+            .records-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page-container">
+
+        <header class="page-header">
+            <div class="decoration" aria-hidden="true">
+                🎀 🧸 🌷 🦋
+            </div>
+
+            <h1>💗 Attendance Records 💗</h1>
+
+            <p>
+                Every little detail matters! 🌸<br>
+                Your AI attendance records, all in one place.
+            </p>
+        </header>
+
+        <section class="records-card">
+
+            <h2 class="records-title">
+                📋 Student Attendance
+            </h2>
+
+            <p class="records-subtitle">
+                ✨ Here are your attendance details ✨
+            </p>
+
+            {% if records %}
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>🌷 Student Name</th>
+                            <th>💌 Roll Number</th>
+                            <th>📅 Date</th>
+                            <th>⏰ Time</th>
+                            <th>💚 Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td>{{ record['name'] }}</td>
+                            <td>{{ record['roll_no'] }}</td>
+                            <td>{{ record['date'] }}</td>
+                            <td>{{ record['time'] }}</td>
+                            <td>
+                                <span class="status">
+                                    {{ record['status'] }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+                <div class="emoji" aria-hidden="true">🧸🌷</div>
+
+                <h3>No Attendance Records Yet</h3>
+
+                <p>
+                    Don't worry! 💗<br>
+                    Attendance records will appear here once attendance
+                    has been marked.
+                </p>
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        <a class="back-link" href="{{ url_for('home') }}">
+            🏡 Back to Dashboard
+        </a>
+
+        <footer class="footer">
+            Made with 💗, flowers and a little AI magic ✨
+        </footer>
+
+    </main>
+
+</body>
+</html>

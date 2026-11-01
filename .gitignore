@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# AI Attendance System - Private Data
+attendance.db
+attendance_backup.db
+
+# Student face photos
+dataset/
+
+# Saved face encodings
+encodings/
+
+# Python virtual environment
+venv/
+
+# Backup Python files
+app_backup.py
+face_model_backup.py
+attendance_backup.py

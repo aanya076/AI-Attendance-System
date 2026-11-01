@@ -2,69 +2,247 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Register Student</title>
+    <title>🎀 Register Student | AI Attendance System</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px 15px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #ffe5f1, #eee5ff, #fff0f7);
+            color: #684b70;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .decorations {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .register-card {
+            width: 100%;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 2px solid #f3d3ed;
+            border-radius: 28px;
+            box-shadow: 0 12px 35px rgba(170, 120, 185, 0.20);
+        }
+
+        h1 {
+            text-align: center;
+            color: #b85e9d;
+            font-size: 29px;
+            margin: 0 0 12px;
+        }
+
+        .subtitle {
+            text-align: center;
+            line-height: 1.7;
+            color: #95759e;
+            margin-bottom: 25px;
+        }
+
+        .message {
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 12px;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+
+        .success {
+            background: #dff6e6;
+            color: #246b3c;
+            border: 1px solid #b9e6c7;
+        }
+
+        .error {
+            background: #ffe8eb;
+            color: #963a4a;
+            border: 1px solid #f3c4cc;
+        }
+
+        .register-form {
+            display: block;
+            width: 100%;
+        }
+
+        .register-form label {
+            display: block;
+            margin: 20px 0 8px;
+            color: #805987;
+            font-weight: 600;
+        }
+
+        .register-form input {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e9d6f0;
+            border-radius: 13px;
+            background: #fffaff;
+            color: #684b70;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .register-form input:focus {
+            border-color: #c99bdf;
+            box-shadow: 0 0 0 3px rgba(201, 155, 223, 0.18);
+        }
+
+        .register-form input::placeholder {
+            color: #b5a2bb;
+        }
+
+        .register-form button {
+            display: block;
+            width: 100%;
+            margin-top: 27px;
+            padding: 15px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ef9cc9, #b49aee);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(190, 120, 180, 0.20);
+        }
+
+        .register-form button:hover {
+            filter: brightness(1.04);
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            width: fit-content;
+            margin: 22px auto 0;
+            padding: 11px 17px;
+            border-radius: 20px;
+            background: #fff0fa;
+            border: 1px solid #f0d4e9;
+            color: #a45f9c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            background: #f7e0f2;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #a58baa;
+            font-size: 13px;
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 24px 19px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <main class="register-container">
 
-    <h1>Register Student</h1>
+        <div class="decorations" aria-hidden="true">
+            🎀 🧸 🌷 🦋
+        </div>
 
-    <p>Enter student details below.</p>
+        <section class="register-card">
 
+            <h1>🌸 Register Student 🌸</h1>
 
-    <form method="POST">
+            <p class="subtitle">
+                Welcome to our little attendance family! 💗<br>
+                Enter the student's details below.
+            </p>
 
-        <label>
-            Student Name
-        </label>
+            <!-- Success and error messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}" role="status">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-        <input
-            type="text"
-            name="name"
-            placeholder="Enter student name"
-            required
-        >
+            <!-- Student registration form -->
+            <form
+                method="POST"
+                action="{{ url_for('register') }}"
+                class="register-form"
+            >
 
+                <label for="name">🎀 Student Name</label>
 
-        <label>
-            Roll Number
-        </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter student's full name"
+                    autocomplete="name"
+                    required
+                >
 
-        <input
-            type="text"
-            name="roll_no"
-            placeholder="Enter roll number"
-            required
-        >
+                <label for="roll_no">💌 Roll Number</label>
 
+                <input
+                    type="text"
+                    id="roll_no"
+                    name="roll_no"
+                    placeholder="Enter a unique roll number"
+                    required
+                >
 
-        <button type="submit">
-            Register Student
-        </button>
+                <button type="submit">
+                    💖 Register Student 🌷
+                </button>
 
-    </form>
+            </form>
 
+            <a class="back-link" href="{{ url_for('home') }}">
+                🏡 Back to Dashboard
+            </a>
 
-    <br>
+            <p class="footer">
+                Made with 💗 and a little AI magic ✨
+            </p>
 
-    <a href="/">
-        ← Back to Dashboard
-    </a>
+        </section>
 
-</div>
+    </main>
 
 </body>
-
 </html>
